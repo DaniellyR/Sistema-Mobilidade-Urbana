@@ -3,7 +3,7 @@ import excecoes.SaldoInsuficienteException;
 
 public class CarteiraApp implements MetodoPagamento{
 
-	double saldo;
+	private double saldo;
 	public CarteiraApp(double saldoInicial) {
 		this.saldo = saldoInicial;
 	}
