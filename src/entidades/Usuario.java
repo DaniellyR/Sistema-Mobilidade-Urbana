@@ -21,4 +21,55 @@ public class Usuario {
         this.mediaNota = 5.0;
         this.avaliacoes = new ArrayList<>();
     }
+
+    //dados pessoais
+    public String getNome(){ //apenas retornar o nome (get), serve para todos os outros dados
+        return nome;
+    }
+    public void setNome(String nome){ //para alterar um novo nome (set), serve para todos os outros dados
+        this.nome = nome;
+    }
+
+    public String getCPF(){
+        return CPF;
+    }
+    public void setCPF( String CPF){
+        this.CPF = CPF;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail( String email){
+        this.email = email;
+    }
+
+    public String getTelefone(){
+        return telefone;
+    }
+    public void setTelefone(String telefone){
+        this.telefone = telefone;
+    }
+
+    public String getSenha(){
+        return senha;
+    }
+    public void setSenha( String senha){
+        this.senha = senha;
+    }
+    
+    // avaliações e notas
+
+    public void receberAvaliacao(int nota){
+        this.avaliacoes.add(nota);
+        double soma = 0.0;
+        for (Integer n : this.avaliacoes) { //calculo da media de avaliações
+            soma = soma + n;
+        }
+        this.mediaNota = soma / this.avaliacoes.size(); 
+    }
+    public double getMediaNota(){
+        return mediaNota;
+    }
+
 }
