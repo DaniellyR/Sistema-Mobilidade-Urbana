@@ -11,6 +11,7 @@ public class Usuario {
     private String telefone;
     private double mediaNota;
     //List é um tipo de vetor sem tamanho definido que aumenta a cada elemento colocado
+
     private List<Integer> avaliacoes;
 
     public Usuario (String nome, String CPF, String email, String senha, String telefone){

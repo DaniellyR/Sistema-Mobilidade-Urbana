@@ -17,6 +17,4 @@ public class CarteiraApp implements MetodoPagamento{
 		this.saldo -= valor;
 				System.out.println("Pagamento válido");
 	}
-	
-	
 }
