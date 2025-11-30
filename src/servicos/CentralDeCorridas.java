@@ -87,13 +87,13 @@ class CentralDeCorridas {
             throw new IllegalArgumentException("Tipo de veículo não pode ser nulo");
         }
 
-        System.out.println("\n🔍 Buscando motorista disponível (tipo: " + tipo + ")...");
+        System.out.println("\nBuscando motorista disponível (tipo: " + tipo + ")...");
 
         // procura por motoristas disponíveis do tipo solicitado
         for (Motorista m : motoristasCadastrados) {
 
             if (m.getStatus() == StatusMotorista.DISPONIVEL && m.getTipoVeiculo() == tipo) {
-                System.out.println("✅ Motorista encontrado: " + m.getNome());
+                System.out.println("Motorista encontrado: " + m.getNome());
                 return m;
             }
         }
