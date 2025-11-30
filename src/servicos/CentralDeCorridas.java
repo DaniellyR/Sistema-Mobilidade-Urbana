@@ -7,7 +7,7 @@ import entidades.Corrida;
 import entidades.Motorista;
 import entidades.Passageiro;
 import entidades.StatusMotorista;
-import entidades.TipoVeiculo;
+import entidades.Veiculo;
 import excecoes.PassageiroPendenteException;
 import excecoes.NenhumMotoristaDisponivelException;
 
@@ -80,7 +80,7 @@ class CentralDeCorridas {
     }
 
     // METODO: BUSCAR MOTORISTA DISPONIVEL
-    private Motorista buscarMotoristaDisponivel(TipoVeiculo tipo)
+    private Motorista buscarMotoristaDisponivel(Veiculo tipo)
             throws NenhumMotoristaDisponivelException {
 
         if (tipo == null) {
@@ -92,7 +92,7 @@ class CentralDeCorridas {
         // procura por motoristas disponíveis do tipo solicitado
         for (Motorista m : motoristasCadastrados) {
 
-            if (m.getStatus() == StatusMotorista.DISPONIVEL && m.getTipoVeiculo() == tipo) {
+            if (m.getStatus() == StatusMotorista.DISPONIVEL && m.getVeiculo() == tipo) {
                 System.out.println("Motorista encontrado: " + m.getNome());
                 return m;
             }
