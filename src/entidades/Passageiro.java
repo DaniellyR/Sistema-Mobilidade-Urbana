@@ -3,6 +3,8 @@ package entidades;
 import java.util.ArrayList;
 import java.util.List;
 
+import excecoes.EstadoInvalidoDaCorridaException;
+
 public class Passageiro extends Usuario {
     private List<MetodoPagamento> meusPagamentos;
     private Corrida corridaAtual;
@@ -18,7 +20,7 @@ public class Passageiro extends Usuario {
     public List<MetodoPagamento> getMeusPagamentos(){
         return meusPagamentos;
     }
-    public void setMeuPagamentos(List<MetodoPagamento> meusPagamentos){
+    public void setMeusPagamentos(List<MetodoPagamento> meusPagamentos){
         this.meusPagamentos = meusPagamentos;
     }
 
@@ -45,5 +47,14 @@ public class Passageiro extends Usuario {
         this.corridaAtual = new Corrida(this, origem, destino);
 
     }
-   
+    public void cancelarCorrida() throws EstadoInvalidoDaCorridaException {
+        if (this.corridaAtual != null) {
+            this.corridaAtual.cancelarPeloPassageiro();
+
+            this.corridaAtual = null;
+            System.out.println("Corrida cancelada pelo passageiro.");
+        } else {
+            System.out.println("Você não tem corrida para cancelar.");
+        }
+    }
 }
