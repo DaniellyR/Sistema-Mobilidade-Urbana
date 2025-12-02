@@ -13,7 +13,7 @@ public class CNH {
 		this.setCategoria(categoria);
 		this.dataValidade = dataValidade;	
 	}
-	
+	//checa se a data de validade da cnh é de um dia anterior a hoje, se sim retorna true(vencida)
 	public boolean estaVencida() {
 		LocalDate hoje = LocalDate.now();
 		return dataValidade.isBefore(hoje);
@@ -22,7 +22,7 @@ public class CNH {
 		return !estaVencida();
 		
 	}
-
+	//getters e setters
 	public String getNumero() {
 		return numero;
 	}

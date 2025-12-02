@@ -45,6 +45,5 @@ public class Passageiro extends Usuario {
         this.corridaAtual = new Corrida(this, origem, destino);
 
     }
-    
-
+   
 }

@@ -47,6 +47,7 @@ public class Corrida {
     public void setPassageiro(Passageiro passageiro){
         this.passageiro = passageiro;
     }
+<<<<<<< HEAD
 
     public String getOrigem(){
         return origem;
@@ -109,6 +110,6 @@ public class Corrida {
         // pelo valor do tipo de carro e somada a base fixa
         return precoEstimado;        
     }
-    
+
     
 }

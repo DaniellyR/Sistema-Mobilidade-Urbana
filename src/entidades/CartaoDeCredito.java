@@ -19,9 +19,11 @@ public class CartaoDeCredito implements MetodoPagamento{
 
 	@Override
 	public void processarPagamento(double valor) throws PagamentoRecusadoException, SaldoInsuficienteException {
+		//verifica se o cartão falhou 
 		if(!autorizar()) {
+		//se sim, ele pega os ultimos 4 digitos e mostra para o usuário, se o cartão tinha menos de 4 digitos ele mostra "xxxx"
 			String finalCartao = (numero.length() >= 4) ? numero.substring(numero.length() - 4) : "xxxx";
-		throw new PagamentoRecusadoException("operadora recusou o cartão com final " + finalCartao);
+		throw new PagamentoRecusadoException("Operadora recusou o cartão com final " + finalCartao);
 		}
 		System.out.println("Pagamento de R$" + valor);
 	}

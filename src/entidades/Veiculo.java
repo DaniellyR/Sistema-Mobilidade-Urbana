@@ -20,6 +20,7 @@ public Veiculo(String placa, String modelo, String cor, int ano, TipoVeiculo tip
 public boolean validarVeiculo() {
 	return this.ano >= 2015;
 }
+//getters e setters
 
 public String getPlaca() {
 	return placa;
