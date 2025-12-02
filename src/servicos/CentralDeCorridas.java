@@ -1,19 +1,18 @@
 package servicos;
 
-import java.util.ArrayList;	
+import java.util.ArrayList;		
 import java.util.List;
 
 import entidades.Corrida;
 import entidades.Motorista;
 import entidades.Passageiro;
 import entidades.StatusMotorista;
-import entidades.Veiculo;
 import excecoes.PassageiroPendenteException;
 import excecoes.NenhumMotoristaDisponivelException;
 import entidades.MetodoPagamento;
 import entidades.TipoVeiculo;
 import entidades.VeiculoComum;
-
+import entidades.Dinheiro;
 public class CentralDeCorridas {
 
     // atributos

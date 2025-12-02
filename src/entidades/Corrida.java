@@ -1,5 +1,9 @@
 package entidades;
 
+import excecoes.EstadoInvalidoDaCorridaException;
+import excecoes.PagamentoRecusadoException;
+import excecoes.SaldoInsuficienteException;
+
 public class Corrida {
     private Passageiro passageiro;
     private Motorista motorista;
@@ -37,9 +41,6 @@ public class Corrida {
     public Motorista getMotorista(){
         return motorista;
     }
-    public void setMotorista( Motorista motorista){
-        this.motorista = motorista;
-    }
 
     public Passageiro getPassageiro(){
         return passageiro;
@@ -47,7 +48,6 @@ public class Corrida {
     public void setPassageiro(Passageiro passageiro){
         this.passageiro = passageiro;
     }
-<<<<<<< HEAD
 
     public String getOrigem(){
         return origem;
@@ -103,12 +103,67 @@ public class Corrida {
         // apenas visualizar o numero de corridas
         // e nunca modificar, por isso, nada de setters
     }
+    public void atribuirMotorista(Motorista m) {
+        this.motorista = m;
+        this.status = StatusCorrida.ACEITA; //altera o status para aceita
+        System.out.println("Motorista " + m.getNome() + " atribuído à corrida " + this.id);
+    }
 
     public double calcularPreco(){
         this.precoEstimado = this.tipoVeiculo.getValorBase() +(this.distanciakm * this.tipoVeiculo.getValorPorKm());
         // ao escolher o tipo de veiculo (comum ou luxo), pelo passageiro, tem que a multiplicação da distancia dada multiplicada
         // pelo valor do tipo de carro e somada a base fixa
         return precoEstimado;        
+    }
+
+    public void iniciarViagem() throws EstadoInvalidoDaCorridaException {
+        if (this.status != StatusCorrida.ACEITA) {
+            throw new EstadoInvalidoDaCorridaException("Não pode iniciar uma corrida que não foi aceita.");
+        }
+        this.status = StatusCorrida.EM_ANDAMENTO;
+    }
+
+   //finalizando a viagem, temos o valor final, o pagamento, eo feedback
+    public void finalizarViagem() throws EstadoInvalidoDaCorridaException{
+        if (this.status != StatusCorrida.EM_ANDAMENTO){//verifica se ele não vai cometer erros
+            throw new EstadoInvalidoDaCorridaException("Não é possível finalizar uma corrida que não está em andamento");
+        }
+
+        this.precoFinal = this.tipoVeiculo.getValorBase() +(this.distanciakm * this.tipoVeiculo.getValorPorKm());
+        //mesmo calculo
+        
+        //verificar se o passageiro pagou, senão fica pendente
+        try {
+            this.metodoPagamento.processarPagamento(this.precoFinal);
+            this.status = StatusCorrida.FINALIZADA;
+            
+        } catch (PagamentoRecusadoException | SaldoInsuficienteException e) {
+            this.passageiro.setPossuiPendencia(true);
+            this.status = StatusCorrida.PENDENTE_PAGAMENTO;
+            System.out.println("Ops! Falha no pagamento: " + e.getMessage());
+            
+        }
+
+        
+    }
+
+    public void cancelarPeloPassageiro() throws EstadoInvalidoDaCorridaException{
+       if (this.status == StatusCorrida.EM_ANDAMENTO) {
+            throw new EstadoInvalidoDaCorridaException("Nãe é possivel cancelar! Já está em andamento.");
+        }
+        else if (this.status == StatusCorrida.FINALIZADA) {
+            throw new EstadoInvalidoDaCorridaException("Nãe é possivel cancelar! Corrida já finalizada.");
+            
+        }
+        else{
+            this.status = StatusCorrida.CANCELADA;
+        }
+    }
+
+    //feedback
+    public void coletarFeedback(int notaPassageiro, int notaMotorista) {
+        this.passageiro.receberAvaliacao(notaPassageiro);
+        this.motorista.receberAvaliacao (notaMotorista);
     }
 
     

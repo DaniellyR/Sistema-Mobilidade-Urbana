@@ -1,6 +1,6 @@
 package entidades;
 
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 
 public abstract class Usuario {
@@ -12,6 +12,7 @@ public abstract class Usuario {
     private double mediaNota;
     private static long contador = 0;
     private long id;
+    
     //List é um tipo de vetor sem tamanho definido que aumenta a cada elemento colocado
 
     private List<Integer> avaliacoes;
