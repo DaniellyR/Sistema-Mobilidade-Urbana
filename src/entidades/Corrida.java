@@ -48,6 +48,67 @@ public class Corrida {
         this.passageiro = passageiro;
     }
 
+    public String getOrigem(){
+        return origem;
+    }
+    public void setOrigem(String origem){
+        this.origem = origem;
+    }
+
+    public String getDestino(){
+        return destino;
+    }
+    public void setDestino( String destino){
+        this.destino = destino;
+    }
+
+    public double getDistancia(){
+        return distanciakm;
+    }
+    public void setDistancia( double d){
+        this.distanciakm = d;
+    }
+
+    public double getPrecoEstimado(){
+        return precoEstimado;
+    }
+    public void setPrecoEstimado (double pe){
+        this.precoEstimado = pe;
+    }
+
+    public double getPrecoFinal(){
+        return precoFinal;
+    }
+    public void setPrecoFinal (double pf){
+        this.precoFinal = pf;
+    }
+
+    public MetodoPagamento getMetodoPagamento(){
+        return metodoPagamento;
+    }
+    public void setMetodoPagamento(MetodoPagamento mp){
+        this.metodoPagamento = mp;
+    }
+
+    public TipoVeiculo getTipoVeiculo(){
+        return tipoVeiculo;
+    }
+    public void setTipoVeiculo(TipoVeiculo tp){
+        this.tipoVeiculo = tp;
+    }
+
+    public long getId(){
+        return id; 
+        // apenas visualizar o numero de corridas
+        // e nunca modificar, por isso, nada de setters
+    }
+
+    public double calcularPreco(){
+        this.precoEstimado = this.tipoVeiculo.getValorBase() +(this.distanciakm * this.tipoVeiculo.getValorPorKm());
+        // ao escolher o tipo de veiculo (comum ou luxo), pelo passageiro, tem que a multiplicação da distancia dada multiplicada
+        // pelo valor do tipo de carro e somada a base fixa
+        return precoEstimado;        
+    }
     
     
 }
