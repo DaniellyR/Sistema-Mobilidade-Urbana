@@ -88,7 +88,6 @@ java -cp bin com.exemplo.MainClass
 
 3. **Gerenciamento**
    - Status de corridas
-   - Histórico de viagens
    - Sistema de avaliações
 
 ### Exemplo Básico:
