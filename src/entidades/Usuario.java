@@ -65,7 +65,7 @@ public class Usuario {
     public void receberAvaliacao(int nota){
         this.avaliacoes.add(nota);
         double soma = 0.0;
-        for (Integer n : this.avaliacoes) { //calculo da media de avaliações
+        for (Integer n : this.avaliacoes) { //calculo da media de avaliações 
             soma = soma + n;
         }
         this.mediaNota = soma / this.avaliacoes.size(); 
