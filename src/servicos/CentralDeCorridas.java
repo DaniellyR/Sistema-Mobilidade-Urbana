@@ -1,6 +1,7 @@
 package servicos;
 
 import java.util.ArrayList;		
+
 import java.util.List;
 
 import entidades.Corrida;
@@ -48,7 +49,7 @@ public class CentralDeCorridas {
         System.out.println("Passageiro cadastrado: " + p.getNome());
     }
     
-    public Corrida solicitarCorrida(Passageiro p, String origem, String destino) 
+    public Corrida c(Passageiro p, String origem, String destino) 
             throws PassageiroPendenteException, NenhumMotoristaDisponivelException {
         
         // veiculo comum vai ser o default do sistema
@@ -86,9 +87,13 @@ public class CentralDeCorridas {
         corrida.atribuirMotorista(motoristaEncontrado);
         p.setCorridaAtual(corrida);
         p.setPossuiPendencia(true);
-
+        corrida.calcularPreco();
+        
         System.out.println("\nCorrida solicitada com sucesso!");
+        System.out.println("Passageiro: " + p.getNome());
         System.out.println("Motorista: " + motoristaEncontrado.getNome());
+        System.out.println("Veículo: " + motoristaEncontrado.getVeiculo().getModelo());
+        
         
         return corrida;
     }

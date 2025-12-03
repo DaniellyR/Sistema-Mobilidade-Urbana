@@ -131,11 +131,13 @@ public class Corrida {
 
         this.precoFinal = this.tipoVeiculo.getValorBase() +(this.distanciakm * this.tipoVeiculo.getValorPorKm());
         //mesmo calculo
-        
+        System.out.println("Valor final calculado: R$ " + this.precoFinal);
         //verificar se o passageiro pagou, senão fica pendente
         try {
             this.metodoPagamento.processarPagamento(this.precoFinal);
             this.status = StatusCorrida.FINALIZADA;
+            System.out.println("Corrida finalizada com sucesso!");
+            this.passageiro.setPossuiPendencia(false);
             
         } catch (PagamentoRecusadoException | SaldoInsuficienteException e) {
             this.passageiro.setPossuiPendencia(true);

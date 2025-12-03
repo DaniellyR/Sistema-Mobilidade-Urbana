@@ -76,7 +76,6 @@ public class Motorista extends Usuario {
         }
 
         this.corridaAtual.finalizarViagem();
-
         System.out.println("Corrida finalizada pelo motorista.");
         this.corridaAtual = null;
         this.status = StatusMotorista.DISPONIVEL;
