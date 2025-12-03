@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+# Sistema-Mobilidade-Urbana
+Projeto desenvolvido para a disciplina de Orientação a Objetos na Faculdade do Gama - FGA.
+=======
 # Sistema de Mobilidade Urbana 🚗
 
 Projeto desenvolvido para a disciplina de Orientação a Objetos na Faculdade do Gama.
+>>>>>>> f453af447032272e2901f0d6f2bb7d47b32fdb01
 
 ## Contexto
 Desenvolver um protótipo de sistema para um aplicativo de compartilhamento de corridas.
