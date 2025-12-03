@@ -17,7 +17,7 @@ public class Pix implements MetodoPagamento{
 		if(chavePix == null || chavePix.isEmpty()) {
 			throw new PagamentoRecusadoException("Chave inválida ou não informada.");
 		}
-		System.out.println("Pagamento realizado de R$" + valor + "via PIX (Chave: " + chavePix + ").");
+		System.out.println("Pagamento realizado de R$" + valor + " via PIX (Chave: " + chavePix + ").");
 	}
 //set e get
 	public String getChavePix() {

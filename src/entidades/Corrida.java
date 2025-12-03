@@ -41,9 +41,6 @@ public class Corrida {
     public Motorista getMotorista(){
         return motorista;
     }
-    public void setMotorista( Motorista motorista){
-        this.motorista = motorista;
-    }
 
     public Passageiro getPassageiro(){
         return passageiro;
@@ -106,6 +103,11 @@ public class Corrida {
         // apenas visualizar o numero de corridas
         // e nunca modificar, por isso, nada de setters
     }
+    public void atribuirMotorista(Motorista m) {
+        this.motorista = m;
+        this.status = StatusCorrida.ACEITA; //altera o status para aceita
+        System.out.println("Motorista " + m.getNome() + " atribuído à corrida " + this.id);
+    }
 
     public double calcularPreco(){
         this.precoEstimado = this.tipoVeiculo.getValorBase() +(this.distanciakm * this.tipoVeiculo.getValorPorKm());
@@ -114,10 +116,12 @@ public class Corrida {
         return precoEstimado;        
     }
 
-    public void iniciarViagem(){
+    public void iniciarViagem() throws EstadoInvalidoDaCorridaException {
+        if (this.status != StatusCorrida.ACEITA) {
+            throw new EstadoInvalidoDaCorridaException("Não pode iniciar uma corrida que não foi aceita.");
+        }
         this.status = StatusCorrida.EM_ANDAMENTO;
-
-   }
+    }
 
    //finalizando a viagem, temos o valor final, o pagamento, eo feedback
     public void finalizarViagem() throws EstadoInvalidoDaCorridaException{
@@ -133,7 +137,7 @@ public class Corrida {
             this.metodoPagamento.processarPagamento(this.precoFinal);
             this.status = StatusCorrida.FINALIZADA;
             
-        } catch (Exception e) {
+        } catch (PagamentoRecusadoException | SaldoInsuficienteException e) {
             this.passageiro.setPossuiPendencia(true);
             this.status = StatusCorrida.PENDENTE_PAGAMENTO;
             System.out.println("Ops! Falha no pagamento: " + e.getMessage());
@@ -143,7 +147,7 @@ public class Corrida {
         
     }
 
-    public void cancelar() throws EstadoInvalidoDaCorridaException{
+    public void cancelarPeloPassageiro() throws EstadoInvalidoDaCorridaException{
        if (this.status == StatusCorrida.EM_ANDAMENTO) {
             throw new EstadoInvalidoDaCorridaException("Nãe é possivel cancelar! Já está em andamento.");
         }

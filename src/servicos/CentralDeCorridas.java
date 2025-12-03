@@ -1,17 +1,19 @@
 package servicos;
 
-import java.util.ArrayList;
+import java.util.ArrayList;		
 import java.util.List;
 
 import entidades.Corrida;
 import entidades.Motorista;
 import entidades.Passageiro;
 import entidades.StatusMotorista;
-import entidades.Veiculo;
 import excecoes.PassageiroPendenteException;
 import excecoes.NenhumMotoristaDisponivelException;
-
-class CentralDeCorridas {
+import entidades.MetodoPagamento;
+import entidades.TipoVeiculo;
+import entidades.VeiculoComum;
+import entidades.Dinheiro;
+public class CentralDeCorridas {
 
     // atributos
     private List<Motorista> motoristasCadastrados;
@@ -45,65 +47,72 @@ class CentralDeCorridas {
         passageirosCadastrados.add(p);
         System.out.println("Passageiro cadastrado: " + p.getNome());
     }
+    
+    public Corrida solicitarCorrida(Passageiro p, String origem, String destino) 
+            throws PassageiroPendenteException, NenhumMotoristaDisponivelException {
+        
+        // veiculo comum vai ser o default do sistema
+        TipoVeiculo tipoPadrao = new VeiculoComum();
+        
+        // dinheiro ou cartao será o default do sistema
+        MetodoPagamento pagPadrao = (p.getMeusPagamentos().isEmpty()) 
+                                    ? new Dinheiro() 
+                                    : p.getMeusPagamentos().get(0);
+        return this.solicitarCorrida(p, origem, destino, pagPadrao, tipoPadrao);
+    }
+    
+    public Corrida solicitarCorrida(Passageiro p, String origem, String destino,MetodoPagamento mp, TipoVeiculo tv) 
+    		throws PassageiroPendenteException, NenhumMotoristaDisponivelException {
 
-    // MÉTODO: SOLICITAR CORRIDA (CORRIGIDO)
-    public Corrida solicitarCorrida(Passageiro p, String origem, String destino)
-            throws PassageiroPendenteException {
-
-        // validação
         if (p == null || origem == null || destino == null) {
-            throw new IllegalArgumentException("Parâmetros não podem ser nulos");
+            throw new IllegalArgumentException("Dados inválidos.");
         }
-
-        // verifica se passageiro está cadastrado
         if (!passageirosCadastrados.contains(p)) {
-            throw new IllegalArgumentException("Passageiro não cadastrado: " + p.getNome());
+            throw new IllegalArgumentException("Passageiro não cadastrado.");
+        }
+        if (p.getPossuiPendencia()) { 
+            throw new PassageiroPendenteException("Passageiro " + p.getNome() + " possui pendências!");
         }
 
-        if (p.getCorridaAtual() != null || p.getPossuiPendencia()) {
-            throw new PassageiroPendenteException(
-                    "Passageiro " + p.getNome() + " já possui uma corrida pendente!");
-        }
+        //se passar por todas as exceções, tenta procurar um motorista
+        Motorista motoristaEncontrado = buscarMotoristaDisponivel(tv);
 
-        // cria a nova corrida
+        //cria a corrida
         Corrida corrida = new Corrida(p, origem, destino);
-
+        corrida.setMetodoPagamento(mp);
+        corrida.setTipoVeiculo(tv);
+        
+        //atribui a corrida
+        corrida.atribuirMotorista(motoristaEncontrado);
         p.setCorridaAtual(corrida);
         p.setPossuiPendencia(true);
 
-        System.out.println("\nNova corrida solicitada:");
-        System.out.println("ID: " + corrida.getId());
-        System.out.println("Passageiro: " + p.getNome());
-        System.out.println("Trajeto: " + origem + " → " + destino);
-
+        System.out.println("\nCorrida solicitada com sucesso!");
+        System.out.println("Motorista: " + motoristaEncontrado.getNome());
+        
         return corrida;
     }
-
-    // METODO: BUSCAR MOTORISTA DISPONIVEL
-    private Motorista buscarMotoristaDisponivel(Veiculo tipo)
+    private Motorista buscarMotoristaDisponivel(TipoVeiculo tipoDesejado) 
             throws NenhumMotoristaDisponivelException {
 
-        if (tipo == null) {
-            throw new IllegalArgumentException("Tipo de veículo não pode ser nulo");
-        }
+        System.out.println("Buscando motorista para categoria: " + tipoDesejado.getClass().getSimpleName() + "...");
 
-        System.out.println("\nBuscando motorista disponível (tipo: " + tipo + ")...");
-
-        // procura por motoristas disponíveis do tipo solicitado
         for (Motorista m : motoristasCadastrados) {
-
-            if (m.getStatus() == StatusMotorista.DISPONIVEL && m.getVeiculo() == tipo) {
-                System.out.println("Motorista encontrado: " + m.getNome());
-                return m;
+            // verifica se o motorista esta livre
+            if (m.getStatus() == StatusMotorista.DISPONIVEL) {
+                
+                // verifica se o tipo de veiculo é o desejado
+                if (m.getVeiculo().getTipo().getClass().equals(tipoDesejado.getClass())) {
+                    return m;
+                }
             }
         }
 
-        // se não encontrou, lança exceção
-        throw new NenhumMotoristaDisponivelException(
-                "Nenhum motorista disponível com veículo do tipo " + tipo);
+        // se não achou nenhum motorista
+        throw new NenhumMotoristaDisponivelException("Não há motoristas disponíveis para essa categoria no momento.");
     }
-
-    // METODOS AUXILIARES
+        
+    // getters e setters
     public List<Motorista> getMotoristasCadastrados() {
         return new ArrayList<>(motoristasCadastrados);
     }

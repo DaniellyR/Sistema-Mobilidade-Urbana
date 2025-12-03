@@ -1,5 +1,8 @@
 package entidades;
 
+import excecoes.EstadoInvalidoDaCorridaException;
+import excecoes.MotoristaInvalidoException;
+
 public class Motorista extends Usuario {
     private CNH cnh;
     private Veiculo veiculo;
@@ -34,31 +37,48 @@ public class Motorista extends Usuario {
     public void setStatus(StatusMotorista status){
         this.status = status;
     }
-
-    //corrida e disponibilidade
-
-    public void ficarOnline(){
-        this.status = StatusMotorista.DISPONIVEL;
-    }
-    public Corrida getCorridaAtual(){
+    public Corrida getCorridaAtual() {
         return corridaAtual;
     }
     public void setCorridaAtual(Corrida corridaAtual){
         this.corridaAtual = corridaAtual;
     }
 
+    //corrida e disponibilidade
+
+    public void ficarOnline() throws MotoristaInvalidoException {
+    	//validar se a cnh é nula ou inválida
+        if (this.cnh == null || !this.cnh.isValida()) {
+            throw new MotoristaInvalidoException("Motorista " + getNome() + " tem a CNH inválida ou vencida.");
+        }
+        //validar se o veiculo nulo ou inválido
+        if (this.veiculo == null || !this.veiculo.validarVeiculo()) {
+            throw new MotoristaInvalidoException("Motorista " + getNome() + " não possui veículo válido.");
+        }
+        this.status = StatusMotorista.DISPONIVEL;
+        System.out.println("Motorista " + getNome() + " agora está DISPONIVEL.");
+    }
     public void aceitarCorrida(Corrida c){
-        if (corridaAtual == null){
+    	//aceita se o motorista estiver disponivel e atualiza o motorista em corrida
+        if (this.status == StatusMotorista.DISPONIVEL){
             this.corridaAtual = c;
             this.status = StatusMotorista.EM_CORRIDA;
-
+            System.out.println("Motorista aceitou a corrida ID: " + c.getId());
+        } 
+        else {
+        	System.out.println("Motorista não pode aceitar: está oucpado ou offline.");
         }
     }
 
-    public void finalizarCorrida(){
-        if (corridaAtual != null){
-            this.corridaAtual = null;
-            this.status = StatusMotorista.DISPONIVEL;
+    public void finalizarCorrida() throws EstadoInvalidoDaCorridaException {
+        if (this.corridaAtual == null){
+            throw new EstadoInvalidoDaCorridaException("Não há corrida em andamento para finalizar.");
         }
+
+        this.corridaAtual.finalizarViagem();
+
+        System.out.println("Corrida finalizada pelo motorista.");
+        this.corridaAtual = null;
+        this.status = StatusMotorista.DISPONIVEL;
     }
 }
