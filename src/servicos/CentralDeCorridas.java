@@ -49,7 +49,7 @@ public class CentralDeCorridas {
         System.out.println("Passageiro cadastrado: " + p.getNome());
     }
     
-    public Corrida c(Passageiro p, String origem, String destino) 
+    public Corrida solicitarCorrida(Passageiro p, String origem, String destino) 
             throws PassageiroPendenteException, NenhumMotoristaDisponivelException {
         
         // veiculo comum vai ser o default do sistema
