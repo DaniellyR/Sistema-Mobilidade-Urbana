@@ -164,8 +164,13 @@ public class Corrida {
 
     //feedback
     public void coletarFeedback(int notaPassageiro, int notaMotorista) {
-        this.passageiro.receberAvaliacao(notaPassageiro);
-        this.motorista.receberAvaliacao (notaMotorista);
+    	if (this.passageiro != null) {
+    		this.passageiro.receberAvaliacao(notaPassageiro);
+    	}
+    	if (this.motorista != null) {
+    		this.motorista.receberAvaliacao(notaMotorista);
+    	}
+
     }
 
     
