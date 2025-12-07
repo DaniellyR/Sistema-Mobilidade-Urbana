@@ -79,17 +79,19 @@ java -cp bin com.exemplo.MainClass
 
 ### Funcionalidades Principais:
 
-1. **Cadastro de Usuários**
+1. **Cadastro e Gestaão de Usuários**
    - Motoristas e passageiros
-   - Validação de dados
+   - Validação de CNH e veículo para motoristas
 
 2. **Solicitação de Corridas**
    - Busca por motoristas disponíveis
    - Definição de origem e destino
+   - Controle de estados (Aceita, Solicitada, Em Andamento, Finalizada)
 
 3. **Gerenciamento**
-   - Status de corridas
    - Sistema de avaliações
+   - Processamento de pagamentos via interfaces (Débito, Crédito, Dinheiro)
+   - Cálculo de tarifas baseado no tipo de veículo
 
 ### Exemplo Básico:
 ```java
