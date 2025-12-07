@@ -1,4 +1,4 @@
-package entidades;
+package app;
 
 import java.time.LocalDate;
 
@@ -20,11 +20,11 @@ public class Main {
 
     public static void main(String[] args) {
         
-        System.out.println("=== SISTEMA DE RIDE-SHARING INICIADO ===\n");
+        System.out.println("SISTEMA DE RIDE-SHARING INICIADO\n");
 
         // instanciar a central de corridas
         CentralDeCorridas central = new CentralDeCorridas();
-
+        
         // criar os tipos de veiculo
         TipoVeiculo tipoComum = new VeiculoComum();
         TipoVeiculo tipoLuxo = new VeiculoLuxo();
@@ -32,7 +32,7 @@ public class Main {
         try {
             // cadastro de motoristas
             
-            // motorista 1: Augusto (Carro Comum / UberX)
+            // motorista 1: Augusto (Carro Comum)
             System.out.println("> Cadastrando Motorista...");
             CNH cnhAugusto = new CNH("11112222", "B", LocalDate.of(2030, 5, 20));
             Veiculo carroAugusto = new Veiculo("ABC-1234", "Fiat Uno", "Prata", 2019, tipoComum);
@@ -42,7 +42,7 @@ public class Main {
             augusto.ficarOnline(); 
             central.cadastrarMotorista(augusto);
 
-            // motorista 2: Danielly (Carro Luxo / UberBlack)
+            // motorista 2: Danielly (Carro Luxo)
             System.out.println("> Cadastrando Motorista...");
             CNH cnhDanielly = new CNH("33334444", "AB", LocalDate.of(2028, 10, 10));
             Veiculo carroDanielly = new Veiculo("XYZ-9999", "Toyota Corolla", "Preto", 2023, tipoLuxo);
@@ -76,14 +76,14 @@ public class Main {
             
             System.out.println("\n>>> INICIANDO SIMULAÇÃO DE CORRIDA <<<");
             
-            // julia solicita uma corrida de LUXO pagando com CARTEIRA
-            // sobrecarga(override)
+            // Julia solicita uma corrida de LUXO pagando com CARTEIRA
+            // sobrecarga(overload)
             Corrida corrida1 = central.solicitarCorrida(
                 julia, 
                 "Aeroporto", 
                 "Hotel Central", 
                 carteiraJulia, // paga com saldo do app
-                tipoLuxo       // Quer ir de carro luxuoso
+                tipoLuxo       // quer ir de carro luxuoso
             );
             System.out.println("\n--- ANDAMENTO DA VIAGEM ---");
             // a central achou a motorista Danielly que tem carro luxuoso
@@ -114,7 +114,7 @@ public class Main {
             System.out.println("Média do Passageiro (" + julia.getNome() + "): " + julia.getMediaNota());
             
             // verifica o saldo final
-            System.out.println("\nSaldo final da carteira do Pedro: R$ " + carteiraJulia.getSaldo());
+            System.out.println("\nSaldo final da carteira da Julia: R$ " + carteiraJulia.getSaldo());
             System.out.println("Status do Passageiro (Tem pendência?): " + julia.getPossuiPendencia());
 
         } catch (MobilidadeUrbanaException e) {

@@ -29,7 +29,7 @@ public class CartaoDeCredito implements MetodoPagamento{
 	}
 
 	private boolean autorizar() {
-		return true;
+		return Math.random() < 0.9;
 	}
 
 	public String getNomeTitular() {

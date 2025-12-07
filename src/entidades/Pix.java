@@ -17,6 +17,10 @@ public class Pix implements MetodoPagamento{
 		if(chavePix == null || chavePix.isEmpty()) {
 			throw new PagamentoRecusadoException("Chave inválida ou não informada.");
 		}
+		if (Math.random() >= 0.9) { 
+            throw new PagamentoRecusadoException("Pix indisponível no momento (Falha de conexão).");
+        }
+		
 		System.out.println("Pagamento realizado de R$" + valor + " via PIX (Chave: " + chavePix + ").");
 	}
 //set e get
